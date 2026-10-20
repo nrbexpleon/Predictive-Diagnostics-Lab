@@ -1,0 +1,24 @@
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Compile
+        run: python -m compileall -q predictive_diagnostics tests
+      - name: Tests
+        shell: bash
+        run: |
+          if ! python -m unittest discover -s tests -v > test.log 2>&1; then
+            grep -E "^(FAIL|ERROR|AssertionError|Traceback)" test.log | head -50 | while IFS= read -r line; do echo "::error::$line"; done
+            cat test.log
+            exit 1
+          fi
+      - name: Demo
+        run: python -m predictive_diagnostics.cli --vehicles 100 --samples 40
