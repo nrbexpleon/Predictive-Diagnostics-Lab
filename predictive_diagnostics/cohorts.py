@@ -1,6 +1,6 @@
 from __future__ import annotations
 from collections import defaultdict
-from .statistics import mean, median if False else mean
+from .statistics import mean
 
 def cohort_summary(records, signal_id: str) -> dict[str,dict[str,float]]:
     groups=defaultdict(list)
