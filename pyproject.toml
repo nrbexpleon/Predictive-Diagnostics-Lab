@@ -1,0 +1,21 @@
+[build-system]
+requires = []
+build-backend = "_custom_build_backend"
+backend-path = ["."]
+
+[project]
+name = "predictive-diagnostics-lab"
+version = "0.1.0"
+description = "Explainable automotive predictive diagnostics and maintenance evidence lab"
+requires-python = ">=3.11"
+license = {text = "LicenseRef-Proprietary"}
+dependencies = []
+
+[project.scripts]
+predictive-diagnostics = "predictive_diagnostics.cli:main"
+
+[tool.coverage.run]
+source = ["predictive_diagnostics"]
+
+[tool.ruff]
+line-length = 100
